@@ -1,18 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Coloured pencil</title>
+    <title>색연필</title>
     <link rel="icon" href="data:," />
     <style>
+      @font-face {
+        font-family: 'Nanum Pen Script';
+        src: url('./fonts/nanum-pen-subset.woff2') format('woff2');
+        font-weight: 400; font-style: normal; font-display: swap;
+      }
       html, body { margin: 0; height: 100%; background: #f6f1e6; overflow: hidden; }
       #view, #view canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
-      #loading { position: fixed; inset: 0; display: grid; place-items: center; color: #6a6470; font: italic 18px/1.4 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; }
+      #loading { position: fixed; inset: 0; display: grid; place-items: center; color: #6a6470; font: italic 20px/1.4 'Nanum Pen Script', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; }
       /* a note in pencil at the foot of the page */
-      #caption { position: fixed; right: 5.5vh; bottom: 3.2vh; color: #6a6470; font: 2.3vh/1 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; transform: rotate(-2deg); pointer-events: none; white-space: nowrap; opacity: 0.85; }
+      #caption { position: fixed; right: 5.5vh; bottom: 3.2vh; color: #6a6470; font: 2.6vh/1 'Nanum Pen Script', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; transform: rotate(-2deg); pointer-events: none; white-space: nowrap; opacity: 0.85; }
       #caption.off { display: none; }
-      #hint { position: fixed; left: 50%; bottom: 3.4vh; transform: translateX(-50%); color: #6a6470; font: 14px/1.4 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      #hint { position: fixed; left: 50%; bottom: 3.4vh; transform: translateX(-50%); color: #6a6470; font: 17px/1.4 'Nanum Pen Script', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
         background: rgba(250, 246, 236, 0.9); padding: 6px 16px; border-radius: 3px; transition: opacity 2s; pointer-events: none; white-space: nowrap; }
       #hint.faded { opacity: 0; }
       #hint.off { display: none; }
@@ -20,9 +25,9 @@
   </head>
   <body>
     <div id="view"></div>
-    <div id="loading">Sharpening pencils</div>
-    <div id="caption" class="off">the harbour, morning</div>
-    <div id="hint">Click to look &middot; WASD move &middot; Shift sprint &middot; Space jump &middot; wheel to step back</div>
+    <div id="loading">색연필을 깎는 중</div>
+    <div id="caption" class="off">항구, 아침</div>
+    <div id="hint">클릭해서 둘러보기 &middot; WASD 이동 &middot; Shift 달리기 &middot; Space 점프 &middot; 휠로 물러나기</div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

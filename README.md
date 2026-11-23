@@ -1,57 +1,60 @@
----
-kind: effect
-engine: three.js
----
+# 색연필 (Coloured pencil) 한글판
 
-# Coloured pencil
+three.js 세계를 스케치북 한 페이지 위의 색연필화처럼 그려 내는 렌더링 효과 데모입니다. 모든 표면은 각자의 색연필 선으로 형태를 따라 명암이 칠해지고, 움직여도 선이 표면에 고정되어 있습니다. 빛은 따뜻한 노란색 덧칠로, 그림자는 그 위에 겹쳐 칠한 청보라색 색연필로 표현되고, 모든 사물 주위에는 부드러운 흑연 윤곽선이 둘러집니다. 그림은 페이지 가장자리로 갈수록 옅어져 맨 종이가 드러납니다. 데모는 밝은 아침의 작은 항구 마을이고, 젊은 뱃사람이 되어 마을을 걸어다닐 수 있습니다.
 
-Draws a three.js world in coloured pencil on a page of a sketchbook: every surface is shaded in strokes of its own pencil that follow its form and stay put as you move, light is a layer of warm yellow and shade a second, blue-violet pencil laid across the first, a soft graphite line goes round each thing, and the drawing fades to bare paper at the edges of the page. The demo is a small harbour town on a bright morning, with a young sailor to walk about in it.
+이 저장소는 [Patch의 @blendi가 만든 Coloured pencil](https://patch.gg/blendi/coloured-pencil)([원본 소스](https://git.patch.gg/blendi/coloured-pencil.git))을 한국어로 옮긴 한글화 포크입니다. 원작의 라이선스(코드 MIT, 아트 CC0 1.0)에 따라 번역·배포하며, 원문 README는 [README.en.md](README.en.md)에 그대로 보존되어 있습니다.
 
-![A sailor in a red beret on a wooden pier, looking at a row of coloured houses, a clock tower and a lighthouse, all drawn in coloured pencil](shots/readme.jpg)
+![나무 부두 위 빨간 베레모의 뱃사람이 색색의 집들과 시계탑, 등대를 바라보는 모습. 모두 색연필로 그려져 있다](shots/readme.jpg)
 
-**In the demo:** click to look with the mouse, WASD to move, Shift to sprint, Space to jump, the wheel to step the eye back or in, H hides the hint. A gamepad works too. There is no sound.
+**데모 조작법:** 클릭하면 마우스로 둘러보기, WASD 이동, Shift 달리기, Space 점프, 휠로 시점을 뒤로/앞으로. H를 누르면 힌트가 숨겨집니다. 게임패드도 됩니다. 사운드는 없습니다.
 
-Walk in off the pier, along the quay under the bunting, past the fruit stall and the cat, to the lighthouse at the far end.
+부두에서 내려와 깃발 장식 아래 부잣길을 따라, 과일 가게와 고양이를 지나 맨 끝의 등대까지 걸어 보세요.
 
-![The lighthouse at the end of the quay, red and white, with its iron gallery](shots/lighthouse.jpg)
+![부잣길 끝의 등대. 빨간색과 흰색 줄무늬에 철제 전망대가 있다](shots/lighthouse.jpg)
 
-![The hill above the town: a farmhouse on its terrace, an orchard, cypresses, the chapel with its bell](shots/hill.jpg)
+![마을 위 언덕: 테라스 위 농가, 과수원, 사이프러스 나무, 종이 달린 예배당](shots/hill.jpg)
 
-It is a starting point, not a filter. You can't lay it over a finished game: each thing in the world carries the directions its strokes run in. Start from this scene, change it, replace it.
+이 프로젝트는 필터가 아니라 출발점입니다. 완성된 게임 위에 덧씌울 수는 없습니다. 세계의 모든 사물이 선이 그어질 방향을 짊어지고 있기 때문입니다. 이 장면에서 시작해 바꾸고, 교체해 나가세요.
 
-## The idea
+## 아이디어
 
-Nothing is a photograph run through a filter. Each thing is drawn the way a hand with a pencil would draw it.
+사진을 필터에 통과시킨 것이 아닙니다. 모든 것을 색연필을 쥔 손이 그리는 방식 그대로 그립니다.
 
-- **Strokes belong to the thing.** Every vertex carries two numbers, a `hatch` attribute (`field()` and `fieldBy()` in `src/pencil.js`): strokes are drawn along the level lines of each. Because they are fixed to the surface, they don't swim when the camera moves. How close together they are is chosen from how big the thing is on screen, in whole octaves, so strokes never slide or swap as you walk up to something.
-- **Colour is laid in layers on white.** `pcDraw` puts down a warm yellow where the light falls, then the thing's own colour lightly all over, then strokes of it pressed harder toward the shade, then a blue-violet shadow pencil across those. The paper's tooth breaks every layer. A vertex's colour is the colour of its pencil.
-- **It is still an ordinary material.** The pencil is a `MeshLambertMaterial` with one piece of its shader replaced, so shadows, skinning and instancing work as usual. `createPencil()` gives three of them: `line` (solid things), `both` (cloth and flags, seen from either side) and `flat` (strings, rigging, smoke: one even line with no outline).
-- **The page finishes it.** `src/page.js` draws a graphite contour from depth alone, leaves flecks of bare paper where the wax skipped, and fades the drawing out toward the edges of the sheet.
-- **Sky and sea are drawn with the same pencils.** Clouds and the sun's glints are paper left bare. The sea mirrors the housefronts and the moored boats, broken by its ripples.
-- **Things are built to be drawn.** `src/shape.js` makes soft, slightly uneven solids (`ball`, `block`, `turned`, `roll`, `knead`), and everything in the town is put together from them in code: no model or picture is loaded.
-- **Small things move.** Bunting flutters, washing sways, smoke curls from the chimneys as a pencil line, bells swing, boats bob, the windmill turns, gulls go round.
+- **선은 사물의 것입니다.** 모든 정점은 `hatch` 속성(`src/pencil.js`의 `field()`와 `fieldBy()`)이라는 두 개의 숫자를 가집니다. 선은 각각의 등고선을 따라 그어집니다. 표면에 고정되어 있기 때문에 카메라가 움직여도 선이 흐르지 않습니다. 선의 간격은 화면에 보이는 크기에서 온 옥타브 단위로 정해지므로, 다가가도 선이 밀리거나 바뀌지 않습니다.
+- **색은 흰 바탕 위에 겹겹이 칠합니다.** `pcDraw`는 빛이 닿는 곳에 따뜻한 노란색을 먼저 칠하고, 사물 고유의 색을 전체에 옅게 칠한 뒤, 그림자 쪽으로 갈수록 같은 색을 더 꾹꾹 눌러 칠하고, 그 위에 청보라색 그림자 색연필을 사선으로 얹습니다. 종이 결(텍스처)이 모든 층을 부숴 줍니다. 정점의 색은 곧 그 색연필의 색입니다.
+- **그래도 평범한 머티리얼입니다.** 색연필은 셰이더 한 조각을 바꿔 낀 `MeshLambertMaterial`이라 그림자, 스키닝, 인스턴싱이 평소처럼 동작합니다. `createPencil()`은 세 가지를 만듭니다: `line`(단단한 것들), `both`(천과 깃발처럼 양면으로 보이는 것), `flat`(끈, 밧줄, 연기처럼 윤곽선 없는 고른 선 하나).
+- **페이지가 마무리합니다.** `src/page.js`는 깊이만으로 흑연 윤곽선을 그리고, 왁스가 미처 닿지 않은 맨 종이 얼룩을 남기며, 종이 가장자리로 갈수록 그림을 옅게 지웁니다.
+- **하늘과 바다도 같은 색연필로 그립니다.** 구름과 햇빛 반짝임은 비워 둔 종이입니다. 바다는 잔물결에 부서지며 집들과 정박한 배를 비춥니다.
+- **사물은 그려지기 위해 만들어졌습니다.** `src/shape.js`는 부드럽고 살짝 들쭉날쭉한 입체(`ball`, `block`, `turned`, `roll`, `knead`)를 만들고, 마을의 모든 것은 코드로 이것들을 조립해 만듭니다. 모델이나 그림 파일을 불러오지 않습니다.
+- **작은 것들이 움직입니다.** 깃발 장식이 펄럭이고, 빨래가 흔들리고, 굴뚝 연기가 색연필 선으로 피어오르고, 종이 흔들리고, 배가 출렁이고, 풍차가 돌고, 갈매기가 빙빙 돕니다.
 
-## Use it
+## 사용법
 
 ```
 npm install
-npm run build        # dist/, the demo as it is published
+npm run build        # dist/, 배포되는 데모 그대로
 npm run serve        # http://127.0.0.1:5476/
 ```
 
-- `src/pencil.js` is the pencil: the shader, the stroke fields, the batches things are gathered into. Start there to draw a world of your own.
-- `src/page.js` is the sheet of paper: contour, flecks, the fade at the edges.
-- `src/harbour/world.js` puts the demo together: sky, sea, quay, pier, lamps and bunting, the stall, the lighthouse, boats, gulls, the light.
-- `src/harbour/houses.js` is the row of houses (tiled roofs, chimneys, shutters, balconies, awnings, signs, vines), `quayside.js` the flagstones, café, bicycle and washing, `tower.js` the church tower, `hills.js` the farms, chapel, vineyard, windmill and trees, `mountains.js` the two ranges behind.
-- `src/sailor.js` is the sailor, sewn onto a skeleton that walks.
-- `?px=5` sets how far apart the strokes are, in pixels at 1080 lines.
+- `src/pencil.js`가 색연필입니다: 셰이더, 선 필드, 사물이 모이는 배치. 나만의 세계를 그리려면 여기서 시작하세요.
+- `src/page.js`는 종이입니다: 윤곽선, 얼룩, 가장자리 페이드.
+- `src/harbour/world.js`가 데모를 조립합니다: 하늘, 바다, 부잣길, 부두, 가로등과 깃발, 가게, 등대, 배, 갈매기, 빛.
+- `src/harbour/houses.js`는 집들(기와지붕, 굴뚝, 덧문, 발코니, 차양, 간판, 덩굴), `quayside.js`는 돌바닥과 카페, 자전거, 빨래, `tower.js`는 종탑, `hills.js`는 농장, 예배당, 포도밭, 풍차와 나무, `mountains.js`는 뒤의 두 산줄기입니다.
+- `src/sailor.js`는 걷는 뼈대에 바느질한 뱃사람입니다.
+- `?px=5`는 선의 간격을 1080줄 기준 픽셀로 정합니다.
 
-The tools in `tools/` take stills and films of the built demo with a headless Chromium (`CHROME` names one of your own): `sh tools/go.sh --name still` builds and takes one.
+`tools/`의 도구들은 빌드된 데모의 스틸 컷과 영상을 헤드리스 Chromium으로 찍습니다(`CHROME`으로 직접 지정 가능). `sh tools/go.sh --name still`은 빌드 후 한 장을 찍습니다.
 
-## What it costs
+## 성능
 
-About 2 ms a frame at 1080p on a fast desktop card. It has not been measured on a laptop. The demo is about 9 MB to download: the sailor's skeleton and clips are 3.6 MB of it and the physics engine 2 MB.
+빠른 데스크톱 그래픽 카드에서 1080p 기준 프레임당 약 2ms입니다. 노트북에서는 측정되지 않았습니다. 데모 다운로드는 약 9MB로, 뱃사람 뼈대와 클립이 3.6MB, 물리 엔진이 2MB입니다.
 
-## Licence
+## 한글화 내용
 
-Code MIT, art CC0 1.0. Everything drawn is made in code. The sailor moves on Patch's starter man's skeleton with clips from Quaternius' Universal Animation Library and Patch's own, all CC0. Physics is Rapier (Apache-2.0). `LICENCE-NOTES.md` has every part and where it came from.
+- 로딩 문구, 장면 캡션, 조작 힌트, 페이지 제목 등 사용자에게 보이는 문구를 한국어로 번역했습니다.
+- 영문 필기체 폰트가 한글을 지원하지 않아 손글씨 느낌의 **나눔손글씨 펜(Nanum Pen Script, OFL)** 웹폰트를 화면에 필요한 글자만 추린 서브셋(약 18KB)으로 추가했습니다.
+- 코드와 원작의 구조·식별자·주석은 원본 그대로 유지했습니다.
+
+## 라이선스
+
+코드 MIT, 아트 CC0 1.0. 그려지는 모든 것은 코드로 만들어졌습니다. 뱃사람은 Patch의 스타터 맨 뼈대 위에 Quaternius의 Universal Animation Library와 Patch 자체 클립(모두 CC0)으로 움직입니다. 물리는 Rapier(Apache-2.0)입니다. 각 부분의 출처는 `LICENCE-NOTES.md`에 있습니다. 한글 폰트 나눔손글씨 펜은 SIL Open Font License(`public/fonts/NanumPenScript-OFL.txt`)입니다.
