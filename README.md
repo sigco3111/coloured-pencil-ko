@@ -55,6 +55,12 @@ npm run serve        # http://127.0.0.1:5476/
 - 영문 필기체 폰트가 한글을 지원하지 않아 손글씨 느낌의 **나눔손글씨 펜(Nanum Pen Script, OFL)** 웹폰트를 화면에 필요한 글자만 추린 서브셋(약 18KB)으로 추가했습니다.
 - 코드와 원작의 구조·식별자·주석은 원본 그대로 유지했습니다.
 
+### 한글판 실행 화면
+
+![한글판 로딩 화면: "지우개 가루를 터는 중"이라는 손글씨 문구와 한글 조작 힌트](shots/ko-loading.jpg)
+
+![한글판 실행 화면: 부두 위 뱃사람과 항구 마을, 아래에 한글 조작 힌트, 오른쪽 아래에 "항구, 아침" 캡션](shots/ko-harbour.jpg)
+
 ## 라이선스
 
 코드 MIT, 아트 CC0 1.0. 그려지는 모든 것은 코드로 만들어졌습니다. 뱃사람은 Patch의 스타터 맨 뼈대 위에 Quaternius의 Universal Animation Library와 Patch 자체 클립(모두 CC0)으로 움직입니다. 물리는 Rapier(Apache-2.0)입니다. 각 부분의 출처는 `LICENCE-NOTES.md`에 있습니다. 한글 폰트 나눔손글씨 펜은 SIL Open Font License(`public/fonts/NanumPenScript-OFL.txt`)입니다.
